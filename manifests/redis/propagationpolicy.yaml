@@ -3,6 +3,7 @@ kind: PropagationPolicy
 metadata:
   name: redis-propagation
 spec:
+  propagateDeps: true
   failover:
     application:
       decisionConditions:
