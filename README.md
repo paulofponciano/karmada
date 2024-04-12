@@ -12,7 +12,7 @@ helm repo update
 helm --namespace karmada-system upgrade -i karmada karmada-charts/karmada --version=1.9.0 --create-namespace --values karmada-values.yaml
 ```
 
-## Kubectl karmada
+## Kubectl karmada (Cli tool)
 
 ```sh
 curl -s https://raw.githubusercontent.com/karmada-io/karmada/master/hack/install-cli.sh | bash -s kubectl-karmada
