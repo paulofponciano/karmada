@@ -2,7 +2,7 @@
 
 <p align="center"><img src="https://github.com/karmada-io/karmada/blob/master/docs/images/Karmada-logo-horizontal-color.png" width="250" alt="karmada"></p>
 
-## Deploy with Helm (Karmada control plane)
+## Deploy with Helm (control plane)
 
 ```sh
 helm repo add karmada-charts https://raw.githubusercontent.com/karmada-io/karmada/master/charts
