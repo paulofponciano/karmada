@@ -3,6 +3,11 @@ kind: PropagationPolicy
 metadata:
   name: redis-propagation
 spec:
+  failover:
+    application:
+      decisionConditions:
+        tolerationSeconds: 120
+      purgeMode: Never
   resourceSelectors:
     - apiVersion: apps/v1
       kind: Deployment
@@ -12,16 +17,7 @@ spec:
       clusterNames:
         - pegasus
         - pegasus-2
-    replicaScheduling:
-      replicaDivisionPreference: Weighted
-      replicaSchedulingType: Divided
-      weightPreference:
-        staticWeightList:
-          - targetCluster:
-              clusterNames:
-                - pegasus
-            weight: 1
-          - targetCluster:
-              clusterNames:
-                - pegasus-2
-            weight: 1
+    spreadConstraints:
+      - maxGroups: 1
+        minGroups: 1
+        spreadByField: cluster
