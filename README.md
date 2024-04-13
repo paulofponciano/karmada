@@ -49,13 +49,13 @@ kubectl --kubeconfig $HOME/.kube/karmada.config get clusters
 
 ## Register cluster member (Pull)
 
-- Control plane karmada:
+- Perform in control plane karmada:
 
 ```sh
 karmadactl token create --print-register-command --kubeconfig /etc/karmada/karmada-apiserver.config
 ```
 
-- Member cluster to register:
+- Perform in member cluster:
 
 ```sh
 $ karmadactl register 10.10.x.x:32443 --token t2jgtm.9nybj0526mjw1jbf --discovery-token-ca-cert-hash sha256:f5a5a43869bb44577dba582e794c3e3750f2050d62f1b1dc80fd3d6a371b6ed4
