@@ -75,7 +75,10 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 argocd login argocd-server.argocd.svc.cluster.local:80 --username admin
 ```
 ```sh
-argocd cluster add karmada-apiserver --name karmada.config
+argocd cluster add karmada-apiserver --name karmada-controlplane
+```
+```sh
+kubectl apply -f karmada-argo-app.yaml
 ```
 
 ---
