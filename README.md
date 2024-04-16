@@ -17,7 +17,7 @@ helm --namespace karmada-system upgrade -i karmada karmada-charts/karmada --vers
 - Karmadactl:
 
 ```sh
-curl -s https://raw.githubusercontent.com/karmada-io/karmada/master/hack/install-cli.sh | sudo bash
+curl -s https://raw.githubusercontent.com/karmada-io/karmada/master/hack/install-cli.sh | bash
 ```
 
 - Kubectl karmada:
@@ -52,7 +52,7 @@ kubectl --kubeconfig $HOME/.kube/karmada.config get clusters
 - Perform in control plane karmada:
 
 ```sh
-karmadactl token create --print-register-command --kubeconfig /etc/karmada/karmada-apiserver.config
+karmadactl token create --print-register-command --kubeconfig $HOME/.kube/karmada.config
 ```
 
 - Perform in member cluster:
@@ -63,6 +63,11 @@ $ karmadactl register 10.10.x.x:32443 --token t2jgtm.9nybj0526mjw1jbf --discover
 
 ## ArgoCD
 
+```sh
+curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+rm argocd-linux-amd64
+```
 ```sh
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 ```

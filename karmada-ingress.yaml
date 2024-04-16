@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: karmada-gateway
+  namespace: karmada-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - hosts:
+        - karmada-api.pauloponciano.digital
+      port:
+        name: https-workloads
+        number: 443
+        protocol: HTTP
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: karmada
+  namespace: karmada-system
+spec:
+  gateways:
+    - karmada-system
+  hosts:
+    - karmada-api.pauloponciano.digital
+  http:
+    - route:
+        - destination:
+            host: karmada-apiserver.karmada-system.svc.cluster.local
+            port:
+              number: 5443
+          weight: 100
