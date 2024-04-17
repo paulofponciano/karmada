@@ -79,7 +79,7 @@ argocd cluster add karmada-apiserver --name karmada-controlplane
 ```
 ```sh
 kubectl apply -f karmada-argo-app.yaml
-```
+``` 
 
 ---
 
