@@ -1,3 +1,5 @@
+![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)
+
 # [Karmada](https://karmada.io/) | Open, Multi-Cloud, Multi-Cluster Kubernetes Orchestration
 
 <p align="center"><img src="https://github.com/karmada-io/karmada/blob/master/docs/images/Karmada-logo-horizontal-color.png" width="250" alt="karmada"></p>
