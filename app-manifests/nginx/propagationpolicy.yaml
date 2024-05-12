@@ -20,8 +20,8 @@ spec:
           - targetCluster:
               clusterNames:
                 - pegasus
-            weight: 3
+            weight: 1
           - targetCluster:
               clusterNames:
                 - pegasus-2
-            weight: 2
+            weight: 1
