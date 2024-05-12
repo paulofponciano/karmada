@@ -76,3 +76,25 @@ spec:
       selfHeal: true
       prune: true
       allowEmpty: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rabbitmq
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: karmada
+  source:
+    repoURL: https://github.com/paulofponciano/karmada.git
+    targetRevision: HEAD
+    path: app-manifests/rabbitmq
+  destination:
+    server: https://karmada-apiserver.karmada-system.svc.cluster.local:5443
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+      allowEmpty: true

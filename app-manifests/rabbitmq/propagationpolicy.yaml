@@ -1,0 +1,24 @@
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: rabbitmq-propagation
+spec:
+  propagateDeps: true
+  failover:
+    application:
+      decisionConditions:
+        tolerationSeconds: 120
+      purgeMode: Never
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: rabbitmq
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - pegasus
+        - pegasus-2
+    spreadConstraints:
+      - maxGroups: 1
+        minGroups: 1
+        spreadByField: cluster
