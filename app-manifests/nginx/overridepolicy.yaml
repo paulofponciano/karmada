@@ -25,17 +25,3 @@ spec:
           - operator: replace
             value:
               bar: test
-    - targetCluster:
-        clusterNames:
-          - pegasus
-      overriders:
-        annotationsOverrider:
-          - operator: add
-            value:
-              env: skoala-stage
-          - operator: remove
-            value:
-              bom: bom
-          - operator: replace
-            value:
-              emma: sophia
