@@ -10,8 +10,8 @@ spec:
   placement:
     clusterAffinity:
       clusterNames:
-        - pegasus-2
         - pegasus
+        - pegasus-2
     replicaScheduling:
       replicaDivisionPreference: Weighted
       replicaSchedulingType: Divided
@@ -19,9 +19,9 @@ spec:
         staticWeightList:
           - targetCluster:
               clusterNames:
-                - pegasus-2
+                - pegasus
             weight: 1
           - targetCluster:
               clusterNames:
-                - pegasus
-            weight: 1
+                - pegasus-2
+            weight: 2

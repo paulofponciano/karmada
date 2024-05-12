@@ -16,8 +16,8 @@ spec:
   placement:
     clusterAffinity:
       clusterNames:
-        - pegasus-2
         - pegasus
+        - pegasus-2
     spreadConstraints:
       - maxGroups: 1
         minGroups: 1
