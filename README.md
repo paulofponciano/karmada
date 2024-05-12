@@ -11,7 +11,7 @@ helm repo add karmada-charts https://raw.githubusercontent.com/karmada-io/karmad
 helm repo update
 ```
 ```sh
-helm --namespace karmada-system upgrade -i karmada karmada-charts/karmada --version=1.9.0 --create-namespace --values karmada-values.yaml
+helm --namespace karmada-system upgrade -i karmada karmada-charts/karmada --create-namespace
 ```
 
 ## CLI Tools
@@ -35,6 +35,22 @@ curl -s https://raw.githubusercontent.com/karmada-io/karmada/master/hack/install
 
 ```sh
 kubectl get secrets -n karmada-system | grep karmada-kubeconfig
+```
+## IRSA
+
+```sh
+aws iam create-policy --policy-name ubuntu-admin-karmada \
+  --policy-document file://iam-policy-irsa-karmada.json
+```
+
+```sh
+eksctl create iamserviceaccount --name ubuntu-admin-karmada \
+  --namespace karmada-system \
+  --cluster pegasus \
+  --attach-policy-arn arn:aws:iam::310240692520:policy/ubuntu-admin-karmada \
+  --region us-east-2 \
+  --profile default \
+  --approve
 ```
 
 ## Join cluster member (Push)

@@ -22,7 +22,7 @@ spec:
     - 'https://github.com/paulofponciano/karmada.git'
   destinations:
     - namespace: '*'
-      server: 'https://'
+      server: 'https://karmada-apiserver.karmada-system.svc.cluster.local:5443'
       name: 'in-cluster'
   clusterResourceWhitelist:
     - group: '*'
@@ -36,7 +36,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: karmada
+  name: redis
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -47,7 +47,8 @@ spec:
     targetRevision: HEAD
     path: manifests/redis
   destination:
-    server: https://
+    server: https://karmada-apiserver.karmada-system.svc.cluster.local:5443
+    namespace: default
   syncPolicy:
     automated:
       selfHeal: true
