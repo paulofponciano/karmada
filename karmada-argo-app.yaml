@@ -45,7 +45,7 @@ spec:
   source:
     repoURL: https://github.com/paulofponciano/karmada.git
     targetRevision: HEAD
-    path: manifests/redis
+    path: app-manifests/redis
   destination:
     server: https://karmada-apiserver.karmada-system.svc.cluster.local:5443
     namespace: default
