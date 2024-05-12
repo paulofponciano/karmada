@@ -47,7 +47,7 @@ aws iam create-policy --policy-name ubuntu-admin-karmada \
 eksctl create iamserviceaccount --name ubuntu-admin-karmada \
   --namespace karmada-system \
   --cluster pegasus \
-  --attach-policy-arn arn:aws:iam::310240692520:policy/ubuntu-admin-karmada \
+  --attach-policy-arn arn:aws:iam::ACCOUNTID:policy/ubuntu-admin-karmada \
   --region us-east-2 \
   --profile default \
   --approve
