@@ -65,7 +65,11 @@
                 "elasticloadbalancing:SetLoadBalancerPoliciesOfListener",
                 "kms:DescribeKey"
             ],
-            "Resource": "*"
+            "Resource": [
+                "arn:aws:eks:us-east-2:310240692520:cluster/pegasus-1",
+                "arn:aws:eks:us-east-2:310240692520:cluster/pegasus-2",
+                "arn:aws:eks:us-west-2:310240692520:cluster/pegasus-3"
+            ]
         },
         {
             "Effect": "Allow",
@@ -81,14 +85,19 @@
             "Effect": "Allow",
             "Action": "eks:DescribeCluster",
             "Resource": [
-                "arn:aws:eks:us-east-2:ACCOUNTID:cluster/pegasus",
-                "arn:aws:eks:us-west-2:ACCOUNTID:cluster/pegasus-2"
+                "arn:aws:eks:us-east-2:310240692520:cluster/pegasus-1",
+                "arn:aws:eks:us-east-2:310240692520:cluster/pegasus-2",
+                "arn:aws:eks:us-west-2:310240692520:cluster/pegasus-3"
             ]
         },
         {
             "Effect": "Allow",
             "Action": "eks:ListClusters",
-            "Resource": "*"
+            "Resource": [
+                "arn:aws:eks:us-east-2:310240692520:cluster/pegasus-1",
+                "arn:aws:eks:us-east-2:310240692520:cluster/pegasus-2",
+                "arn:aws:eks:us-west-2:310240692520:cluster/pegasus-3"
+            ]
         }
     ]
 }

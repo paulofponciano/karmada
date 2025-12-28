@@ -52,6 +52,9 @@ spec:
         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&
         unzip awscliv2.zip &&
         ./aws/install &&
+        curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64 &&
+        install -m 555 argocd-linux-amd64 /usr/local/bin/argocd &&
+        rm argocd-linux-amd64 &&
         sleep 604800
     imagePullPolicy: IfNotPresent
     name: ubuntu
