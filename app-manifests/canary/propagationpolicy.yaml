@@ -1,39 +1,39 @@
-apiVersion: policy.karmada.io/v1alpha1
-kind: PropagationPolicy
-metadata:
-  name: nginx-rollout-propagation
-spec:
-  resourceSelectors:
-    - apiVersion: argoproj.io/v1alpha1
-      kind: Rollout
-      name: nginx
-  placement:
-    clusterAffinity:
-      clusterNames:
-        - pegasus-2
-    replicaScheduling:
-      replicaDivisionPreference: Weighted
-      replicaSchedulingType: Divided
-      weightPreference:
-        staticWeightList:
-          - targetCluster:
-              clusterNames:
-                - pegasus-2
-            weight: 1
----
-apiVersion: policy.karmada.io/v1alpha1
-kind: PropagationPolicy
-metadata:
-  name: nginx-services-propagation
-spec:
-  resourceSelectors:
-    - apiVersion: v1
-      kind: Service
-      name: nginx-stable
-    - apiVersion: v1
-      kind: Service
-      name: nginx-canary
-  placement:
-    clusterAffinity:
-      clusterNames:
-        - pegasus-2
+# apiVersion: policy.karmada.io/v1alpha1
+# kind: PropagationPolicy
+# metadata:
+#   name: nginx-rollout-propagation
+# spec:
+#   resourceSelectors:
+#     - apiVersion: argoproj.io/v1alpha1
+#       kind: Rollout
+#       name: nginx
+#   placement:
+#     clusterAffinity:
+#       clusterNames:
+#         - pegasus-2
+#     replicaScheduling:
+#       replicaDivisionPreference: Weighted
+#       replicaSchedulingType: Divided
+#       weightPreference:
+#         staticWeightList:
+#           - targetCluster:
+#               clusterNames:
+#                 - pegasus-2
+#             weight: 1
+# ---
+# apiVersion: policy.karmada.io/v1alpha1
+# kind: PropagationPolicy
+# metadata:
+#   name: nginx-services-propagation
+# spec:
+#   resourceSelectors:
+#     - apiVersion: v1
+#       kind: Service
+#       name: nginx-stable
+#     - apiVersion: v1
+#       kind: Service
+#       name: nginx-canary
+#   placement:
+#     clusterAffinity:
+#       clusterNames:
+#         - pegasus-2
