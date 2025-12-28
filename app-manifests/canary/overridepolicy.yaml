@@ -1,27 +1,27 @@
-# apiVersion: policy.karmada.io/v1alpha1
-# kind: OverridePolicy
-# metadata:
-#   name: nginx-rollout-op
-# spec:
-#   resourceSelectors:
-#     - apiVersion: argoproj.io/v1alpha1
-#       kind: Rollout
-#       name: nginx
-#   overrideRules:
-#     - targetCluster:
-#         clusterNames:
-#           - pegasus-2
-#       overriders:
-#         labelsOverrider:
-#           - operator: add
-#             value:
-#               env: skoala-dev
-#           - operator: add
-#             value:
-#               env-stat: skoala-stage
-#           - operator: remove
-#             value:
-#               for: for
-#           - operator: replace
-#             value:
-#               bar: test
+apiVersion: policy.karmada.io/v1alpha1
+kind: OverridePolicy
+metadata:
+  name: nginx-rollout-op
+spec:
+  resourceSelectors:
+    - apiVersion: argoproj.io/v1alpha1
+      kind: Rollout
+      name: nginx-canary
+  overrideRules:
+    - targetCluster:
+        clusterNames:
+          - pegasus-2
+      overriders:
+        labelsOverrider:
+          - operator: add
+            value:
+              env: skoala-dev
+          - operator: add
+            value:
+              env-stat: skoala-stage
+          - operator: remove
+            value:
+              for: for
+          - operator: replace
+            value:
+              bar: test
