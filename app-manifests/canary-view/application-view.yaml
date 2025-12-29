@@ -3,14 +3,15 @@ kind: Application
 metadata:
   name: nginx-canary-pegasus2-view
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/tracking-id: "view-only"
 spec:
   project: default
   source:
     repoURL: https://github.com/paulofponciano/karmada.git
+    path: app-manifests/canary
     targetRevision: HEAD
-    path: app-manifests/canary-view
+    directory:
+      recurse: false
+      exclude: '{*override*.yaml,*propagation*.yaml}'
   destination:
     name: pegasus-2
     namespace: default
@@ -24,7 +25,16 @@ spec:
       jsonPointers:
         - /spec/replicas
         - /status
+        - /metadata/annotations
+        - /metadata/resourceVersion
+        - /metadata/uid
+        - /metadata/generation
     - group: ""
       kind: Service
       jsonPointers:
         - /spec/selector/rollouts-pod-template-hash
+        - /spec/clusterIP
+        - /spec/clusterIPs
+        - /metadata/annotations
+        - /metadata/resourceVersion
+        - /metadata/uid
