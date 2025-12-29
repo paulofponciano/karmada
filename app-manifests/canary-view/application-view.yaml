@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-canary-pegasus2-view
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/tracking-id: "view-only"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/paulofponciano/karmada.git
+    targetRevision: HEAD
+    path: app-manifests/canary-view
+  destination:
+    name: pegasus-2
+    namespace: default
+  syncPolicy:
+    syncOptions:
+      - Validate=false
+      - CreateNamespace=false
+  ignoreDifferences:
+    - group: argoproj.io
+      kind: Rollout
+      jsonPointers:
+        - /spec/replicas
+        - /status
+    - group: ""
+      kind: Service
+      jsonPointers:
+        - /spec/selector/rollouts-pod-template-hash
