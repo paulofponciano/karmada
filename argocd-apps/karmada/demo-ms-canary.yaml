@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-canary
+  name: demo-ms-canary
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
