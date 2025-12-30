@@ -27,7 +27,7 @@ spec:
               bar: test
     - targetCluster:
         clusterNames:
-          - pegasus
+          - pegasus-3
       overriders:
         annotationsOverrider:
           - operator: add
