@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: demo-ms-canary-views
+  name: demo-ms-canary
   namespace: argocd
 spec:
   generators:
@@ -11,13 +11,9 @@ spec:
           - cluster: pegasus-3
   template:
     metadata:
-      name: 'demo-ms-canary-{{cluster}}-view'
-      labels:
-        app: demo-ms-canary
-        cluster: '{{cluster}}'
-        type: view
+      name: demo-ms-canary
     spec:
-      project: default
+      project: "default"
       source:
         repoURL: 'registry-1.docker.io/paulofponciano'
         chart: demo-ms-intercomunicacao
@@ -28,7 +24,7 @@ spec:
             name: demo-ms-canary
             namespace: default
             image: paulofponciano/demo-ms-intercomunicacao:latest
-            replicas: 2
+            replicas: 1
             env:
               - name: TITLE
                 value: "Microservice Demo"
@@ -80,48 +76,19 @@ spec:
               type: canary
               canary:
                 steps:
-                  - setWeight: 0
-                  - pause: {}
-                  - setWeight: 10
-                  - pause: {}
-                  - setWeight: 20
-                  - pause: {}
-                  - setWeight: 40
-                  - pause: {}
-                  - setWeight: 80
-                  - pause: {}
-                  - setWeight: 100
+                - setWeight: 0
+                - pause: { }
+                - setWeight: 10
+                - pause: { }
+                - setWeight: 20
+                - pause: { }
+                - setWeight: 40
+                - pause: { }
+                - setWeight: 80
+                - pause: { }
+                - setWeight: 100
       destination:
-        name: '{{cluster}}'
-        namespace: default
+        server: '{{ cluster }}'
+        namespace: argocd
       syncPolicy:
-        syncOptions:
-          - Validate=false
-          - CreateNamespace=false
-      ignoreDifferences:
-        - group: argoproj.io
-          kind: Rollout
-          jsonPointers:
-            - /spec/replicas
-            - /status
-            - /metadata/annotations
-            - /metadata/resourceVersion
-            - /metadata/uid
-            - /metadata/generation
-        - group: ""
-          kind: Service
-          jsonPointers:
-            - /spec/selector/rollouts-pod-template-hash
-            - /spec/clusterIP
-            - /spec/clusterIPs
-            - /metadata/annotations
-            - /metadata/resourceVersion
-            - /metadata/uid
-        - group: networking.istio.io
-          kind: VirtualService
-          jsonPointers:
-            - /metadata/annotations
-            - /metadata/resourceVersion
-            - /metadata/uid
-            - /spec/http/0/route/0/weight
-            - /spec/http/0/route/1/weight
+        automated: {}

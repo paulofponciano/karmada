@@ -1,0 +1,29 @@
+apiVersion: policy.karmada.io/v1alpha1
+kind: OverridePolicy
+metadata:
+  name: demo-ms-canary-override
+  namespace: default
+spec:
+  resourceSelectors:
+    - apiVersion: argoproj.io/v1alpha1
+      kind: Rollout
+      name: demo-ms-canary
+  overrideRules:
+    - targetCluster:
+        clusterNames:
+          - pegasus-2
+      overriders:
+        labelsOverrider:
+          - operator: add
+            value:
+              cluster: pegasus-2
+              env: dev
+    - targetCluster:
+        clusterNames:
+          - pegasus-3
+      overriders:
+        labelsOverrider:
+          - operator: add
+            value:
+              cluster: pegasus-3
+              env: stage

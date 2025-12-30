@@ -21,7 +21,7 @@ spec:
               env-stat: skoala-stage
           - operator: remove
             value:
-              for: for
+              for: for  
           - operator: replace
             value:
               bar: test
