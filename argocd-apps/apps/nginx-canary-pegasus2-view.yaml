@@ -1,0 +1,54 @@
+# argocd-apps/views/nginx-canary-views.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx-canary-views
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - cluster: pegasus-2
+          - cluster: pegasus-3
+  template:
+    metadata:
+      name: 'nginx-canary-{{cluster}}-view'
+      labels:
+        app: nginx-canary
+        cluster: '{{cluster}}'
+        type: view
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/paulofponciano/karmada.git
+        path: app-manifests/app-simple-canary
+        targetRevision: HEAD
+        directory:
+          recurse: false
+          exclude: '{*override*.yaml,*propagation*.yaml}'
+      destination:
+        name: '{{cluster}}'
+        namespace: default
+      syncPolicy:
+        syncOptions:
+          - Validate=false
+          - CreateNamespace=false
+      ignoreDifferences:
+        - group: argoproj.io
+          kind: Rollout
+          jsonPointers:
+            - /spec/replicas
+            - /status
+            - /metadata/annotations
+            - /metadata/resourceVersion
+            - /metadata/uid
+            - /metadata/generation
+        - group: ""
+          kind: Service
+          jsonPointers:
+            - /spec/selector/rollouts-pod-template-hash
+            - /spec/clusterIP
+            - /spec/clusterIPs
+            - /metadata/annotations
+            - /metadata/resourceVersion
+            - /metadata/uid

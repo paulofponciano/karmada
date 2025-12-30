@@ -1,18 +1,16 @@
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
 metadata:
-  name: demo-ms-canary-rollout-propagation
-  namespace: default
+  name: nginx-rollout-propagation
 spec:
   resourceSelectors:
     - apiVersion: argoproj.io/v1alpha1
       kind: Rollout
-      name: demo-ms-canary
+      name: nginx-canary
   placement:
     clusterAffinity:
       clusterNames:
         - pegasus-2
-        - pegasus-3
     replicaScheduling:
       replicaDivisionPreference: Weighted
       replicaSchedulingType: Divided
@@ -22,58 +20,20 @@ spec:
               clusterNames:
                 - pegasus-2
             weight: 1
-          - targetCluster:
-              clusterNames:
-                - pegasus-3
-            weight: 1
 ---
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
 metadata:
-  name: demo-ms-canary-services-propagation
-  namespace: default
+  name: nginx-services-propagation
 spec:
   resourceSelectors:
     - apiVersion: v1
       kind: Service
-      name: demo-ms-canary
+      name: nginx-stable
     - apiVersion: v1
       kind: Service
-      name: demo-ms-canary-canary
+      name: nginx-canary
   placement:
     clusterAffinity:
       clusterNames:
         - pegasus-2
-        - pegasus-3
----
-apiVersion: policy.karmada.io/v1alpha1
-kind: PropagationPolicy
-metadata:
-  name: demo-ms-canary-virtualservice-propagation
-  namespace: default
-spec:
-  resourceSelectors:
-    - apiVersion: networking.istio.io/v1
-      kind: VirtualService
-      name: demo-ms-canary
-  placement:
-    clusterAffinity:
-      clusterNames:
-        - pegasus-2
-        - pegasus-3
----
-apiVersion: policy.karmada.io/v1alpha1
-kind: PropagationPolicy
-metadata:
-  name: demo-ms-canary-gateway-propagation
-  namespace: default
-spec:
-  resourceSelectors:
-    - apiVersion: networking.istio.io/v1
-      kind: Gateway
-      name: demo-ms-canary-gateway
-  placement:
-    clusterAffinity:
-      clusterNames:
-        - pegasus-2
-        - pegasus-3
