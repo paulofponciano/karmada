@@ -50,7 +50,7 @@ spec:
                   perTryTimeout: 500ms
                   retryOn: connect-failure,refused-stream,unavailable,cancelled,503
               gateway:
-                enabled: false
+                enabled: true
                 name: demo-ms-canary-gateway
                 host: demo-ms-canary.paulofponciano.dev
                 selector: ingressgateway
