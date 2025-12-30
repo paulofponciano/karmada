@@ -7,10 +7,79 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    repoURL: https://github.com/paulofponciano/karmada.git
-    path: app-manifests/app-simple-canary
-    targetRevision: HEAD
+  sources:
+    # Source 1: Helm Chart (gera Rollout, Services, VirtualService)
+    - repoURL: 'registry-1.docker.io/paulofponciano'
+      chart: demo-ms-intercomunicacao
+      targetRevision: 0.1.18
+      helm:
+        releaseName: demo-ms-canary
+        valuesObject:
+          name: demo-ms-canary
+          namespace: default
+          image: paulofponciano/demo-ms-intercomunicacao:latest
+          replicas: 4
+          env:
+            - name: TITLE
+              value: "Microservice Demo"
+            - name: RESPONSE_TIME
+              value: "0"
+            - name: EXTERNAL_CALL_URL
+              value: ""
+            - name: EXTERNAL_CALL_METHOD
+              value: "GET"
+            - name: APP_VERSION
+              value: "0.1.8"
+          service:
+            portName: http
+            port: 5000
+            protocol: TCP
+            targetPort: 5000
+          istio:
+            virtualService:
+              enabled: true
+              protocol: http
+              retries:
+                attempts: 2
+                perTryTimeout: 500ms
+                retryOn: connect-failure,refused-stream,unavailable,cancelled,503
+            gateway:
+              enabled: false
+          prometheus:
+            scrape: false
+          livenessProbe:
+            enabled: true
+            path: /healthz
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            enabled: true
+            path: /ready
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+          strategy:
+            type: canary
+            canary:
+              steps:
+                - setWeight: 0
+                - pause: {}
+                - setWeight: 10
+                - pause: {}
+                - setWeight: 20
+                - pause: {}
+                - setWeight: 40
+                - pause: {}
+                - setWeight: 80
+                - pause: {}
+                - setWeight: 100
+    # Source 2: Karmada Policies
+    - repoURL: https://github.com/paulofponciano/karmada.git
+      path: app-manifests/demo-ms-canary
+      targetRevision: HEAD
   destination:
     name: karmada-controlplane
     namespace: default
