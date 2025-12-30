@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: root-apps
+  name: root-karmada
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/paulofponciano/karmada.git
-    path: argocd-apps/applications
+    path: argocd-apps/karmada
     targetRevision: HEAD
     directory:
       recurse: false
