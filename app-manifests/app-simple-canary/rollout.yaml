@@ -1,24 +1,35 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: nginx-canary
+  name: demo-ms-canary
   labels:
-    app: nginx-canary
+    app: demo-ms-canary
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: nginx-canary
+      app: demo-ms-canary
   template:
     metadata:
       labels:
-        app: nginx-canary
+        app: demo-ms-canary
     spec:
       containers:
-      - image: nginx:1.27.5
-        name: nginx
+      - image: paulofponciano/demo-ms-intercomunicacao:latest
+        name: demo-container-app
         ports:
-        - containerPort: 80
+        - containerPort: 5000
+        env:
+              - name: TITLE
+                value: "Microservice Demo"
+              - name: RESPONSE_TIME
+                value: "0"
+              - name: EXTERNAL_CALL_URL
+                value: ""
+              - name: EXTERNAL_CALL_METHOD
+                value: "GET"
+              - name: APP_VERSION
+                value: "0.1.1"
   strategy:
     canary:
       steps:
@@ -30,27 +41,29 @@ spec:
         - pause: {duration: 30s}
         - setWeight: 80
         - pause: {duration: 30s}
-      canaryService: nginx-canary
-      stableService: nginx-stable
+      canaryService: demo-ms-canary
+      stableService: demo-ms-stable
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-stable
+  name: demo-ms-stable
 spec:
   selector:
-    app: nginx-canary
+    app: demo-ms-canary
   ports:
-    - port: 80
-      targetPort: 80
+    - port: 5000
+      targetPort: 5000
+      protocol: TCP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-canary
+  name: demo-ms-canary
 spec:
   selector:
-    app: nginx-canary
+    app: demo-ms-canary
   ports:
-    - port: 80
-      targetPort: 80
+    - port: 5000
+      targetPort: 5000
+      protocol: TCP

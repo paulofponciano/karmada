@@ -1,8 +1,7 @@
-# argocd-apps/views/nginx-canary-views.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: nginx-canary-views
+  name: demo-ms-canary-views
   namespace: argocd
 spec:
   generators:
@@ -12,9 +11,9 @@ spec:
           - cluster: pegasus-3
   template:
     metadata:
-      name: 'nginx-canary-{{cluster}}-view'
+      name: 'demo-ms-canary-{{cluster}}-view'
       labels:
-        app: nginx-canary
+        app: demo-ms-canary
         cluster: '{{cluster}}'
         type: view
     spec:
@@ -25,7 +24,7 @@ spec:
         targetRevision: HEAD
         directory:
           recurse: false
-          exclude: '{*override*.yaml,*propagation*.yaml}'
+          exclude: '{*policy*.yaml,*policies*.yaml}'
       destination:
         name: '{{cluster}}'
         namespace: default
@@ -52,3 +51,26 @@ spec:
             - /metadata/annotations
             - /metadata/resourceVersion
             - /metadata/uid
+        - group: networking.istio.io
+          kind: VirtualService
+          jsonPointers:
+            - /metadata/annotations
+            - /metadata/resourceVersion
+            - /metadata/uid
+            - /metadata/generation
+            - /spec/http/0/route/0/weight
+            - /spec/http/0/route/1/weight
+        - group: networking.istio.io
+          kind: DestinationRule
+          jsonPointers:
+            - /metadata/annotations
+            - /metadata/resourceVersion
+            - /metadata/uid
+            - /metadata/generation
+        - group: networking.istio.io
+          kind: Gateway
+          jsonPointers:
+            - /metadata/annotations
+            - /metadata/resourceVersion
+            - /metadata/uid
+            - /metadata/generation

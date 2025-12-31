@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: demo-ms-canary
+  namespace: default
+spec:
+  hosts:
+    - demo-ms-canary.paulofponciano.dev
+  gateways:
+    - demo-ms-canary-gateway
+  http:
+    - name: primary
+      route:
+        - destination:
+            host: demo-ms-stable.default.svc.cluster.local
+            port:
+              number: 5000
+          weight: 100
+        - destination:
+            host: demo-ms-canary.default.svc.cluster.local
+            port:
+              number: 5000
+          weight: 0
+      retries:
+        attempts: 2
+        perTryTimeout: 500ms
+        retryOn: connect-failure,refused-stream,unavailable,cancelled,503

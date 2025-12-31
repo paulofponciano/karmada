@@ -1,12 +1,13 @@
 apiVersion: policy.karmada.io/v1alpha1
 kind: OverridePolicy
 metadata:
-  name: nginx-rollout-op2
+  name: demo-ms-canary-override
+  namespace: default
 spec:
   resourceSelectors:
     - apiVersion: argoproj.io/v1alpha1
       kind: Rollout
-      name: nginx-canary
+      name: demo-ms-canary
   overrideRules:
     - targetCluster:
         clusterNames:
@@ -15,27 +16,14 @@ spec:
         labelsOverrider:
           - operator: add
             value:
-              env: skoala-dev
-          - operator: add
-            value:
-              env-stat: skoala-stage
-          - operator: remove
-            value:
-              for: for
-          - operator: replace
-            value:
-              bar: test
+              cluster: pegasus-2
+              env: dev
     - targetCluster:
         clusterNames:
           - pegasus-3
       overriders:
-        annotationsOverrider:
+        labelsOverrider:
           - operator: add
             value:
-              env: skoala-stage
-          - operator: remove
-            value:
-              bom: bom
-          - operator: replace
-            value:
-              emma: sophia
+              cluster: pegasus-3
+              env: stage

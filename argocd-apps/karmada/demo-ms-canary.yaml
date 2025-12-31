@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/paulofponciano/karmada.git
-    path: app-manifests/app-canary
+    path: app-manifests/app-simple-canary
     targetRevision: HEAD
   destination:
     name: karmada-controlplane
