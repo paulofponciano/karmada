@@ -1,3 +1,5 @@
+# propagationpolicy.yaml
+---
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
 metadata:
@@ -17,11 +19,6 @@ spec:
     spreadConstraints:
       - maxGroups: 1
         minGroups: 1
-    clusterTolerations:
-      - key: "cluster.karmada.io/not-ready"
-        operator: "Exists"
-        effect: "NoExecute"
-        tolerationSeconds: 300
     replicaScheduling:
       replicaSchedulingType: Duplicated
   failover:
@@ -29,7 +26,7 @@ spec:
       decisionConditions:
         tolerationSeconds: 60
       purgeMode: Graciously
-      gracePeriodSeconds: 300
+      gracePeriodSeconds: 60
 ---
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
@@ -53,17 +50,12 @@ spec:
     spreadConstraints:
       - maxGroups: 1
         minGroups: 1
-    clusterTolerations:
-      - key: "cluster.karmada.io/not-ready"
-        operator: "Exists"
-        effect: "NoExecute"
-        tolerationSeconds: 300
   failover:
     application:
       decisionConditions:
         tolerationSeconds: 60
       purgeMode: Graciously
-      gracePeriodSeconds: 300
+      gracePeriodSeconds: 60
 ---
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
@@ -90,14 +82,9 @@ spec:
     spreadConstraints:
       - maxGroups: 1
         minGroups: 1
-    clusterTolerations:
-      - key: "cluster.karmada.io/not-ready"
-        operator: "Exists"
-        effect: "NoExecute"
-        tolerationSeconds: 300
   failover:
     application:
       decisionConditions:
         tolerationSeconds: 60
       purgeMode: Graciously
-      gracePeriodSeconds: 300
+      gracePeriodSeconds: 60
