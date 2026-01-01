@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: demo-ms-canary-views
+  name: demo-ms-canary-rollout-view
   namespace: argocd
 spec:
   generators:
@@ -11,11 +11,11 @@ spec:
           - cluster: pegasus-3
   template:
     metadata:
-      name: 'demo-ms-canary-{{cluster}}-view'
+      name: 'demo-ms-canary-{{cluster}}-rollout-view'
       labels:
         app: demo-ms-canary
         cluster: '{{cluster}}'
-        type: view
+        type: rollout-view
     spec:
       project: default
       source:
