@@ -13,19 +13,22 @@ spec:
       clusterNames:
         - pegasus-2
         - pegasus-3
+    spreadConstraints:
+      - maxGroups: 1
+        minGroups: 1
+    clusterTolerations:
+      - key: "cluster.karmada.io/not-ready"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300
     replicaScheduling:
-      replicaDivisionPreference: Weighted
-      replicaSchedulingType: Divided
-      weightPreference:
-        staticWeightList:
-          - targetCluster:
-              clusterNames:
-                - pegasus-2
-            weight: 1
-          - targetCluster:
-              clusterNames:
-                - pegasus-3
-            weight: 1
+      replicaSchedulingType: Duplicated
+  failover:
+    application:
+      decisionConditions:
+        tolerationSeconds: 60
+      purgeMode: Graciously
+      gracePeriodSeconds: 300
 ---
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
@@ -45,46 +48,34 @@ spec:
       clusterNames:
         - pegasus-2
         - pegasus-3
+    spreadConstraints:
+      - maxGroups: 1
+        minGroups: 1
+    clusterTolerations:
+      - key: "cluster.karmada.io/not-ready"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300
+  failover:
+    application:
+      decisionConditions:
+        tolerationSeconds: 60
+      purgeMode: Graciously
+      gracePeriodSeconds: 300
 ---
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
 metadata:
-  name: demo-ms-canary-virtualservice-propagation
+  name: demo-ms-canary-istio-propagation
   namespace: default
 spec:
   resourceSelectors:
     - apiVersion: networking.istio.io/v1
       kind: VirtualService
       name: demo-ms-canary
-  placement:
-    clusterAffinity:
-      clusterNames:
-        - pegasus-2
-        - pegasus-3
----
-apiVersion: policy.karmada.io/v1alpha1
-kind: PropagationPolicy
-metadata:
-  name: demo-ms-canary-destinationrule-propagation
-  namespace: default
-spec:
-  resourceSelectors:
     - apiVersion: networking.istio.io/v1
       kind: DestinationRule
       name: demo-ms-canary
-  placement:
-    clusterAffinity:
-      clusterNames:
-        - pegasus-2
-        - pegasus-3
----
-apiVersion: policy.karmada.io/v1alpha1
-kind: PropagationPolicy
-metadata:
-  name: demo-ms-canary-gateway-propagation
-  namespace: default
-spec:
-  resourceSelectors:
     - apiVersion: networking.istio.io/v1
       kind: Gateway
       name: demo-ms-canary-gateway
@@ -93,3 +84,17 @@ spec:
       clusterNames:
         - pegasus-2
         - pegasus-3
+    spreadConstraints:
+      - maxGroups: 1
+        minGroups: 1
+    clusterTolerations:
+      - key: "cluster.karmada.io/not-ready"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300
+  failover:
+    application:
+      decisionConditions:
+        tolerationSeconds: 60
+      purgeMode: Graciously
+      gracePeriodSeconds: 300

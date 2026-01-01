@@ -17,7 +17,7 @@ spec:
           - operator: add
             value:
               cluster: pegasus-2
-              env: dev
+              env: production
     - targetCluster:
         clusterNames:
           - pegasus-3
@@ -26,4 +26,4 @@ spec:
           - operator: add
             value:
               cluster: pegasus-3
-              env: stage
+              env: disaster-recovery
