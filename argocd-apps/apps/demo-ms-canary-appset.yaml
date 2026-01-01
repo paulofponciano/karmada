@@ -8,7 +8,6 @@ spec:
     - list:
         elements:
           - cluster: pegasus-2
-          - cluster: pegasus-3
   template:
     metadata:
       name: 'demo-ms-canary-{{cluster}}-rollout-view'
@@ -32,6 +31,8 @@ spec:
         syncOptions:
           - Validate=false
           - CreateNamespace=false
+          - Prune=false
+          - ApplyOutOfSyncOnly=true
       ignoreDifferences:
         - group: argoproj.io
           kind: Rollout
