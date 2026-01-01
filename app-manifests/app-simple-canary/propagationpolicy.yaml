@@ -6,7 +6,8 @@ metadata:
   name: demo-ms-canary-rollout-propagation
   namespace: default
 spec:
-  propagateDeps: true
+  conflictResolution: Overwrite
+  propagateDeps: false
   resourceSelectors:
     - apiVersion: argoproj.io/v1alpha1
       kind: Rollout
@@ -34,7 +35,8 @@ metadata:
   name: demo-ms-canary-services-propagation
   namespace: default
 spec:
-  propagateDeps: true
+  conflictResolution: Overwrite
+  propagateDeps: false
   resourceSelectors:
     - apiVersion: v1
       kind: Service
@@ -63,7 +65,8 @@ metadata:
   name: demo-ms-canary-istio-propagation
   namespace: default
 spec:
-  propagateDeps: true
+  conflictResolution: Overwrite
+  propagateDeps: false
   resourceSelectors:
     - apiVersion: networking.istio.io/v1
       kind: VirtualService
