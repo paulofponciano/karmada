@@ -14,19 +14,19 @@ spec:
   placement:
     clusterAffinity:
       clusterNames:
-      #  - pegasus-2
+        - pegasus-2
         - pegasus-3
     spreadConstraints:
       - maxGroups: 1
         minGroups: 1
     replicaScheduling:
       replicaSchedulingType: Duplicated
-  # failover:
-  #   application:
-  #     decisionConditions:
-  #       tolerationSeconds: 60
-  #     purgeMode: Graciously
-  #     gracePeriodSeconds: 60
+  failover:
+    application:
+      decisionConditions:
+        tolerationSeconds: 60
+      purgeMode: Graciously
+      gracePeriodSeconds: 60
 ---
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
@@ -46,17 +46,17 @@ spec:
   placement:
     clusterAffinity:
       clusterNames:
-      #  - pegasus-2
+        - pegasus-2
         - pegasus-3
     spreadConstraints:
       - maxGroups: 1
         minGroups: 1
-  # failover:
-  #   application:
-  #     decisionConditions:
-  #       tolerationSeconds: 60
-  #     purgeMode: Graciously
-  #     gracePeriodSeconds: 60
+  failover:
+    application:
+      decisionConditions:
+        tolerationSeconds: 60
+      purgeMode: Graciously
+      gracePeriodSeconds: 60
 ---
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
@@ -79,14 +79,14 @@ spec:
   placement:
     clusterAffinity:
       clusterNames:
-      #  - pegasus-2
+        - pegasus-2
         - pegasus-3
     spreadConstraints:
       - maxGroups: 1
         minGroups: 1
-  # failover:
-  #   application:
-  #     decisionConditions:
-  #       tolerationSeconds: 60
-  #     purgeMode: Graciously
-  #     gracePeriodSeconds: 60
+  failover:
+    application:
+      decisionConditions:
+        tolerationSeconds: 60
+      purgeMode: Graciously
+      gracePeriodSeconds: 60
